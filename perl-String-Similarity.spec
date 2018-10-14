@@ -4,16 +4,16 @@
 #
 Name     : perl-String-Similarity
 Version  : 1.04
-Release  : 1
+Release  : 2
 URL      : https://cpan.metacpan.org/authors/id/M/ML/MLEHMANN/String-Similarity-1.04.tar.gz
 Source0  : https://cpan.metacpan.org/authors/id/M/ML/MLEHMANN/String-Similarity-1.04.tar.gz
 Source1  : http://http.debian.net/debian/pool/main/libs/libstring-similarity-perl/libstring-similarity-perl_1.04-2.debian.tar.xz
 Summary  : ~
 Group    : Development/Tools
 License  : GPL-2.0
-Requires: perl-String-Similarity-lib
-Requires: perl-String-Similarity-license
-Requires: perl-String-Similarity-man
+Requires: perl-String-Similarity-lib = %{version}-%{release}
+Requires: perl-String-Similarity-license = %{version}-%{release}
+BuildRequires : buildreq-cpan
 
 %description
 NAME
@@ -21,10 +21,20 @@ String::Similarity - calculate the similarity of two strings
 SYNOPSIS
 use String::Similarity;
 
+%package dev
+Summary: dev components for the perl-String-Similarity package.
+Group: Development
+Requires: perl-String-Similarity-lib = %{version}-%{release}
+Provides: perl-String-Similarity-devel = %{version}-%{release}
+
+%description dev
+dev components for the perl-String-Similarity package.
+
+
 %package lib
 Summary: lib components for the perl-String-Similarity package.
 Group: Libraries
-Requires: perl-String-Similarity-license
+Requires: perl-String-Similarity-license = %{version}-%{release}
 
 %description lib
 lib components for the perl-String-Similarity package.
@@ -38,19 +48,11 @@ Group: Default
 license components for the perl-String-Similarity package.
 
 
-%package man
-Summary: man components for the perl-String-Similarity package.
-Group: Default
-
-%description man
-man components for the perl-String-Similarity package.
-
-
 %prep
-tar -xf %{SOURCE1}
-cd ..
 %setup -q -n String-Similarity-1.04
-mkdir -p %{_topdir}/BUILD/String-Similarity-1.04/deblicense/
+cd ..
+%setup -q -T -D -n String-Similarity-1.04 -b 1
+mkdir -p deblicense/
 mv %{_topdir}/BUILD/debian/* %{_topdir}/BUILD/String-Similarity-1.04/deblicense/
 
 %build
@@ -75,13 +77,13 @@ make TEST_VERBOSE=1 test
 
 %install
 rm -rf %{buildroot}
-mkdir -p %{buildroot}/usr/share/doc/perl-String-Similarity
-cp COPYING %{buildroot}/usr/share/doc/perl-String-Similarity/COPYING
-cp deblicense/copyright %{buildroot}/usr/share/doc/perl-String-Similarity/deblicense_copyright
+mkdir -p %{buildroot}/usr/share/package-licenses/perl-String-Similarity
+cp COPYING %{buildroot}/usr/share/package-licenses/perl-String-Similarity/COPYING
+cp deblicense/copyright %{buildroot}/usr/share/package-licenses/perl-String-Similarity/deblicense_copyright
 if test -f Makefile.PL; then
-make pure_install PERL_INSTALL_ROOT=%{buildroot}
+make pure_install PERL_INSTALL_ROOT=%{buildroot} INSTALLDIRS=vendor
 else
-./Build install --installdirs=site --destdir=%{buildroot}
+./Build install --installdirs=vendor --destdir=%{buildroot}
 fi
 find %{buildroot} -type f -name .packlist -exec rm -f {} ';'
 find %{buildroot} -depth -type d -exec rmdir {} 2>/dev/null ';'
@@ -90,17 +92,17 @@ find %{buildroot} -type f -name '*.bs' -empty -exec rm -f {} ';'
 
 %files
 %defattr(-,root,root,-)
-/usr/lib/perl5/site_perl/5.26.1/x86_64-linux-thread-multi/String/Similarity.pm
+/usr/lib/perl5/vendor_perl/5.26.1/x86_64-linux-thread-multi/String/Similarity.pm
+
+%files dev
+%defattr(-,root,root,-)
+/usr/share/man/man3/String::Similarity.3
 
 %files lib
 %defattr(-,root,root,-)
-/usr/lib/perl5/site_perl/5.26.1/x86_64-linux-thread-multi/auto/String/Similarity/Similarity.so
+/usr/lib/perl5/vendor_perl/5.26.1/x86_64-linux-thread-multi/auto/String/Similarity/Similarity.so
 
 %files license
-%defattr(-,root,root,-)
-/usr/share/doc/perl-String-Similarity/COPYING
-/usr/share/doc/perl-String-Similarity/deblicense_copyright
-
-%files man
-%defattr(-,root,root,-)
-/usr/share/man/man3/String::Similarity.3
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/perl-String-Similarity/COPYING
+/usr/share/package-licenses/perl-String-Similarity/deblicense_copyright
