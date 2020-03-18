@@ -4,7 +4,7 @@
 #
 Name     : perl-String-Similarity
 Version  : 1.04
-Release  : 11
+Release  : 12
 URL      : https://cpan.metacpan.org/authors/id/M/ML/MLEHMANN/String-Similarity-1.04.tar.gz
 Source0  : https://cpan.metacpan.org/authors/id/M/ML/MLEHMANN/String-Similarity-1.04.tar.gz
 Source1  : http://http.debian.net/debian/pool/main/libs/libstring-similarity-perl/libstring-similarity-perl_1.04-2.debian.tar.xz
@@ -80,7 +80,7 @@ make TEST_VERBOSE=1 test
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/perl-String-Similarity
 cp %{_builddir}/String-Similarity-1.04/COPYING %{buildroot}/usr/share/package-licenses/perl-String-Similarity/48d348ad54ae95b9aafcc5c9f1adcf555449a3b8
-cp %{_builddir}/String-Similarity-1.04/deblicense/copyright %{buildroot}/usr/share/package-licenses/perl-String-Similarity/8dd9ea654c60425670bacfcd78a6891f018a1a6b
+cp %{_builddir}/debian/copyright %{buildroot}/usr/share/package-licenses/perl-String-Similarity/8dd9ea654c60425670bacfcd78a6891f018a1a6b
 if test -f Makefile.PL; then
 make pure_install PERL_INSTALL_ROOT=%{buildroot} INSTALLDIRS=vendor
 else
@@ -105,5 +105,5 @@ find %{buildroot} -type f -name '*.bs' -empty -exec rm -f {} ';'
 
 %files perl
 %defattr(-,root,root,-)
-/usr/lib/perl5/vendor_perl/5.30.1/x86_64-linux-thread-multi/String/Similarity.pm
-/usr/lib/perl5/vendor_perl/5.30.1/x86_64-linux-thread-multi/auto/String/Similarity/Similarity.so
+/usr/lib/perl5/vendor_perl/5.30.2/x86_64-linux-thread-multi/String/Similarity.pm
+/usr/lib/perl5/vendor_perl/5.30.2/x86_64-linux-thread-multi/auto/String/Similarity/Similarity.so
