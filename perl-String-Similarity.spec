@@ -4,7 +4,7 @@
 #
 Name     : perl-String-Similarity
 Version  : 1.04
-Release  : 20
+Release  : 21
 URL      : https://cpan.metacpan.org/authors/id/M/ML/MLEHMANN/String-Similarity-1.04.tar.gz
 Source0  : https://cpan.metacpan.org/authors/id/M/ML/MLEHMANN/String-Similarity-1.04.tar.gz
 Source1  : http://http.debian.net/debian/pool/main/libs/libstring-similarity-perl/libstring-similarity-perl_1.04-2.debian.tar.xz
@@ -105,5 +105,4 @@ find %{buildroot} -type f -name '*.bs' -empty -exec rm -f {} ';'
 
 %files perl
 %defattr(-,root,root,-)
-/usr/lib/perl5/vendor_perl/5.34.0/x86_64-linux-thread-multi/String/Similarity.pm
-/usr/lib/perl5/vendor_perl/5.34.0/x86_64-linux-thread-multi/auto/String/Similarity/Similarity.so
+/usr/lib/perl5/*
